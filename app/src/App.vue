@@ -15,7 +15,7 @@ export default {
     async getTestData() {
       try {
         const respons = await axios.get("/api/test")
-        this.testData = respons.data
+        this.testData = respons.data.name
       } catch (err) {
         console.log(err)
       }

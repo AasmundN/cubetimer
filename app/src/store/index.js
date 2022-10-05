@@ -1,7 +1,7 @@
 import { createStore } from "vuex"
 
 export default createStore({
-  state: { amogus: "amogus" },
+  state: {},
   mutations: {},
   actions: {},
   modules: {},
