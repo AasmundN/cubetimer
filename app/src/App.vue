@@ -1,11 +1,18 @@
 <template>
   {{ testData }}
+  <LoginBtn></LoginBtn>
 </template>
 
 <script>
 import axios from "axios"
 
+import LoginBtn from "./components/usr/LoginBtn.vue"
+
 export default {
+  name: "App",
+  components: {
+    LoginBtn,
+  },
   data() {
     return {
       testData: "",

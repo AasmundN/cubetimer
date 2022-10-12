@@ -1,4 +1,4 @@
-# amogus
+# app
 
 ## Project setup
 ```
