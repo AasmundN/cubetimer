@@ -6,7 +6,7 @@
 <script>
 import axios from "axios"
 
-import LoginBtn from "./components/usr/LoginBtn.vue"
+import LoginBtn from "./components/user/LoginBtn.vue"
 
 export default {
   name: "App",
@@ -27,9 +27,20 @@ export default {
         console.log(err)
       }
     },
+    async getUser() {
+      axios
+        .get("/api/user")
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
   },
   created() {
     this.getTestData()
+    this.getUser()
   },
 }
 </script>
