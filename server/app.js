@@ -1,6 +1,8 @@
 //dependencies
 import express from "express"
 import dotenv from "dotenv"
+
+import firebaseApp from "./firebase.config.js"
 import apiRouter from "./routes/index.js"
 
 //get global variables
