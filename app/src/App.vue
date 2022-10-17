@@ -1,50 +1,46 @@
 <template>
   {{ testData }}
-  <LoginBtn></LoginBtn>
+  <LoginBtn />
 </template>
 
-<script>
+<script setup>
+// import dependencies
+import { ref } from "vue"
 import axios from "axios"
 
+// import components
 import LoginBtn from "./components/user/LoginBtn.vue"
 
-export default {
-  name: "App",
-  components: {
-    LoginBtn,
-  },
-  data() {
-    return {
-      testData: "",
-    }
-  },
-  methods: {
-    async getTestData() {
-      await axios
-        .get("/api/test")
-        .then((res) => {
-          this.testData = res.data.name
-        })
-        .catch((err) => {
-          // handle error here
-        })
-    },
-    async getUser() {
-      await axios
-        .get("/api/user")
-        .then((res) => {
-          // add user to store
-        })
-        .catch((err) => {
-          // handle error here
-        })
-    },
-  },
-  created() {
-    this.getTestData()
-    this.getUser()
-  },
+// reactive data
+const testData = ref("")
+
+// methods
+async function getTestData() {
+  await axios
+    .get("/api/test")
+    .then((res) => {
+      testData.value = res.data.name
+    })
+    .catch((err) => {
+      // handle error here
+    })
 }
+
+async function getUser() {
+  await axios
+    .get("/api/user")
+    .then((res) => {
+      // add user to store
+      console.log(res.data.name)
+    })
+    .catch((err) => {
+      // handle error here
+    })
+}
+
+// code to run upon creation of component
+getTestData()
+getUser()
 </script>
 
 <style lang="scss"></style>

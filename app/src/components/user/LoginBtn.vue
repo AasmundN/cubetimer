@@ -1,44 +1,42 @@
 <template>
-  <button @click="signIn">Login</button>
+  <button @click="signIn">{{ buttonTxt }}</button>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue"
+
 import axios from "axios"
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 
-export default {
-  data() {
-    return {}
-  },
-  methods: {
-    async signIn() {
-      const auth = getAuth()
-      const provider = new GoogleAuthProvider()
+const buttonTxt = ref("Login")
 
-      await signInWithPopup(auth, provider)
-        .then(async (result) => {
-          const idToken = await result.user.getIdToken()
+async function signIn() {
+  const auth = getAuth()
+  const provider = new GoogleAuthProvider()
 
-          // probably find a better way to deal with cookies
-          document.cookie = `idToken=${idToken}`
+  await signInWithPopup(auth, provider)
+    .then(async (result) => {
+      const idToken = await result.user.getIdToken()
 
-          axios
-            .get("/api/user")
-            .then((res) => {
-              // add user to store
-            })
-            .catch((err) => {
-              // handle error here
-            })
+      // probably find a better way to deal with cookies
+      document.cookie = `idToken=${idToken}`
+
+      axios
+        .get("/api/user")
+        .then((res) => {
+          // add user to store
+          console.log(res.data.name)
         })
-        .catch((error) => {
-          const errorCode = error.code
-          const errorMessage = error.message
-          const email = error.customData.email
-          const credential = GoogleAuthProvider.credentialFromError(error)
+        .catch((err) => {
+          // handle error here
         })
-    },
-  },
+    })
+    .catch((error) => {
+      const errorCode = error.code
+      const errorMessage = error.message
+      const email = error.customData.email
+      const credential = GoogleAuthProvider.credentialFromError(error)
+    })
 }
 </script>
 
