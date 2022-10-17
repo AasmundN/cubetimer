@@ -20,21 +20,23 @@ export default {
   },
   methods: {
     async getTestData() {
-      try {
-        const respons = await axios.get("/api/test")
-        this.testData = respons.data.name
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    async getUser() {
-      axios
-        .get("/api/user")
+      await axios
+        .get("/api/test")
         .then((res) => {
-          console.log(res.data)
+          this.testData = res.data.name
         })
         .catch((err) => {
-          console.log(err)
+          // handle error here
+        })
+    },
+    async getUser() {
+      await axios
+        .get("/api/user")
+        .then((res) => {
+          // add user to store
+        })
+        .catch((err) => {
+          // handle error here
         })
     },
   },

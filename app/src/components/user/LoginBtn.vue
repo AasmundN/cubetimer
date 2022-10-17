@@ -11,27 +11,24 @@ export default {
     return {}
   },
   methods: {
-    signIn() {
+    async signIn() {
       const auth = getAuth()
       const provider = new GoogleAuthProvider()
 
-      signInWithPopup(auth, provider)
-        .then((result) => {
-          result.user
-            .getIdToken()
-            .then((idToken) => {
-              document.cookie = `idToken=${idToken}`
-              axios
-                .get("/api/user")
-                .then((res) => {
-                  console.log(res.data)
-                })
-                .catch((err) => {
-                  console.log(err)
-                })
+      await signInWithPopup(auth, provider)
+        .then(async (result) => {
+          const idToken = await result.user.getIdToken()
+
+          // probably find a better way to deal with cookies
+          document.cookie = `idToken=${idToken}`
+
+          axios
+            .get("/api/user")
+            .then((res) => {
+              // add user to store
             })
             .catch((err) => {
-              console.log(err)
+              // handle error here
             })
         })
         .catch((error) => {
